@@ -27,13 +27,19 @@ jobs:
         run: |
           python -m scripts.edinet.download_document_list
 
-      - name: Commit files
+      
+
+
+      - name: Commit generated files
         run: |
-          git config --global user.name github-actions
-          git config --global user.email github-actions@github.com
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
           git add .
 
-          git diff --cached --quiet || git commit -m "update EDINET data"
-
-          git push
+          if git diff --cached --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: update EDINET data"
+            git push
+          fi
