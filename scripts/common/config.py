@@ -1,51 +1,80 @@
-
 from __future__ import annotations
+
+"""
+Global configuration for SmartMoney.
+
+All project paths and global settings should be defined here.
+"""
 
 import os
 from pathlib import Path
 
-# ==========================
-# Project Root
-# ==========================
+# ==============================================================================
+# Project Paths
+# ==============================================================================
 
-ROOT_DIR = Path(__file__).resolve().parents[2]
+# SmartMoney/
+ROOT_DIR: Path = Path(__file__).resolve().parents[2]
 
-# ==========================
-# Directories
-# ==========================
+DATA_DIR: Path = ROOT_DIR / "data"
 
-DATA_DIR = ROOT_DIR / "data"
+RAW_DATA_DIR: Path = DATA_DIR / "raw"
 
-RAW_DATA_DIR = DATA_DIR / "raw"
+PROCESSED_DATA_DIR: Path = DATA_DIR / "processed"
 
-PROCESSED_DATA_DIR = DATA_DIR / "processed"
+DOCS_DIR: Path = ROOT_DIR / "docs"
 
-DOCS_DATA_DIR = ROOT_DIR / "docs" / "data"
+DOCS_DATA_DIR: Path = DOCS_DIR / "data"
 
-LOG_DIR = ROOT_DIR / "logs"
+LOG_DIR: Path = ROOT_DIR / "logs"
 
-# 自动创建目录
-for path in (
+TEMP_DIR: Path = ROOT_DIR / "temp"
+
+# Automatically create directories
+for directory in (
     DATA_DIR,
     RAW_DATA_DIR,
     PROCESSED_DATA_DIR,
     DOCS_DATA_DIR,
     LOG_DIR,
+    TEMP_DIR,
 ):
-    path.mkdir(parents=True, exist_ok=True)
+    directory.mkdir(parents=True, exist_ok=True)
 
-# ==========================
+# ==============================================================================
 # EDINET
-# ==========================
+# ==============================================================================
 
-EDINET_API_KEY = os.getenv("EDINET_API_KEY", "")
+EDINET_API_KEY: str = os.getenv("EDINET_API_KEY", "")
 
-EDINET_BASE_URL = "https://api.edinet-fsa.go.jp/api/v2"
+EDINET_BASE_URL: str = "https://api.edinet-fsa.go.jp/api/v2"
 
-# ==========================
+# ==============================================================================
 # HTTP
-# ==========================
+# ==============================================================================
 
-REQUEST_TIMEOUT = 30
+REQUEST_TIMEOUT: int = 30
 
-USER_AGENT = "SmartMoney/0.1"
+USER_AGENT: str = "SmartMoney/0.1 (+https://github.com)"
+
+# ==============================================================================
+# GitHub Pages
+# ==============================================================================
+
+LATEST_JSON: Path = DOCS_DATA_DIR / "latest.json"
+
+HISTORY_JSON: Path = DOCS_DATA_DIR / "history.json"
+
+EVENTS_JSON: Path = DOCS_DATA_DIR / "events.json"
+
+INSTITUTIONS_JSON: Path = DOCS_DATA_DIR / "institutions.json"
+
+SCORES_JSON: Path = DOCS_DATA_DIR / "scores.json"
+
+# ==============================================================================
+# Raw EDINET
+# ==============================================================================
+
+RAW_EDINET_DIR: Path = RAW_DATA_DIR / "edinet"
+
+RAW_EDINET_DIR.mkdir(parents=True, exist_ok=True)
