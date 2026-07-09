@@ -16,7 +16,7 @@ logger = get_logger(__name__)
 
 
 class EdinetClient:
-    """EDINET API Client."""
+    """Client for EDINET API."""
 
     def __init__(self) -> None:
         self.session = requests.Session()
@@ -28,9 +28,16 @@ class EdinetClient:
 
     def get_document_list(self, target_date: date) -> dict:
         """
-        Download document list from EDINET.
+        Get document list for a specific date.
 
-        Returns raw JSON.
+        Parameters
+        ----------
+        target_date : date
+
+        Returns
+        -------
+        dict
+            Raw JSON response.
         """
 
         url = f"{EDINET_BASE_URL}/documents.json"
@@ -38,8 +45,10 @@ class EdinetClient:
         params = {
             "date": target_date.strftime("%Y-%m-%d"),
             "type": 2,
-            "Subscription-Key": EDINET_API_KEY,
         }
+
+        if EDINET_API_KEY:
+            params["Subscription-Key"] = EDINET_API_KEY
 
         logger.info("Downloading document list: %s", target_date)
 
