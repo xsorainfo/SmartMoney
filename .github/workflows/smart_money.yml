@@ -27,7 +27,9 @@ jobs:
         run: |
           python -m scripts.edinet.download_document_list
 
-      
+      - name: Filter large holder reports
+        run: |
+          python -m scripts.edinet.filter_large_holder
 
 
       - name: Commit generated files
