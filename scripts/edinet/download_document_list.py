@@ -21,6 +21,8 @@ def main() -> None:
     logger.info("Start downloading document list...")
 
     data = client.get_document_list(target_date)
+    logger.info("Response keys: %s", list(data.keys()))
+    print(json.dumps(data, ensure_ascii=False, indent=2)[:3000])
 
     output_dir = RAW_EDINET_DIR / target_date.strftime("%Y-%m-%d")
     output_dir.mkdir(parents=True, exist_ok=True)
